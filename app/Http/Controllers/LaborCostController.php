@@ -17,7 +17,7 @@ class LaborCostController extends Controller
     {
         $this->authorize('view', $project);
 
-        $laborCosts = $project->laborCosts()->latest()->get();
+        $laborCosts = $project->contractorCosts()->latest()->get();
 
         return view('labor-costs.index', compact('project', 'laborCosts'));
     }

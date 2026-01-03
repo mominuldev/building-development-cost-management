@@ -69,7 +69,7 @@ class WorkerController extends Controller
     {
         $this->authorize('view', $project);
 
-        $contractors = $project->laborCosts()->contractors()->get();
+        $contractors = $project->contractorCosts()->contractors()->get();
 
         $categories = [
             'mason' => 'Mason',
@@ -155,7 +155,7 @@ class WorkerController extends Controller
             abort(404);
         }
 
-        $contractors = $project->laborCosts()->contractors()->get();
+        $contractors = $project->contractorCosts()->contractors()->get();
 
         $categories = [
             'mason' => 'Mason',

@@ -35,7 +35,7 @@ class PaymentController extends Controller
         $payments = $query->latest()->get();
 
         // Calculate totals
-        $contractors = $project->laborCosts()->contractors()->get();
+        $contractors = $project->contractorCosts()->contractors()->get();
         $workers = $project->workers()->active()->get();
 
         $paymentStats = [
@@ -57,7 +57,7 @@ class PaymentController extends Controller
     {
         $this->authorize('view', $project);
 
-        $contractors = $project->laborCosts()->contractors()->get();
+        $contractors = $project->contractorCosts()->contractors()->get();
         $workers = $project->workers()->active()->get();
 
         $paymentMethods = [
@@ -122,7 +122,7 @@ class PaymentController extends Controller
             abort(404);
         }
 
-        $contractors = $project->laborCosts()->contractors()->get();
+        $contractors = $project->contractorCosts()->contractors()->get();
         $workers = $project->workers()->active()->get();
 
         $paymentMethods = [

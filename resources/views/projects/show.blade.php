@@ -171,12 +171,12 @@
                         <div class="flex justify-between items-center">
                             <h3 class="card-title">Contractor Costs</h3>
                             <div class="flex gap-4">
-                                <div class="badge badge-neutral">{{ $project->laborCosts->count() }} contractors</div>
+                                <div class="badge badge-neutral">{{ $project->contractorCosts->count() }} contractors</div>
                                 <div class="badge badge-success">{{ number_format($project->total_labor_cost, 2) }}</div>
                             </div>
                         </div>
 
-                        @if($project->laborCosts->count() > 0)
+                        @if($project->contractorCosts->count() > 0)
                             <div class="overflow-x-auto mt-4">
                                 <table class="table table-sm">
                                     <thead>
@@ -188,7 +188,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($project->laborCosts->take(3) as $labor)
+                                        @foreach($project->contractorCosts->take(3) as $labor)
                                             @php
                                                 $balance = $labor->total_due - $labor->total_payments_received;
                                             @endphp
@@ -224,7 +224,7 @@
 
                         <div class="card-actions justify-end">
                             <a href="{{ route('projects.labor-costs.index', $project) }}" class="btn btn-success">
-                                @if($project->laborCosts->count() > 0)
+                                @if($project->contractorCosts->count() > 0)
                                     Manage Contractors
                                 @else
                                     Add First Contractor

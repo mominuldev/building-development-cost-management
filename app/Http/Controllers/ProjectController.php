@@ -48,7 +48,7 @@ class ProjectController extends Controller
     {
         $this->authorize('view', $project);
 
-        $project->load(['materials', 'laborCosts', 'structureCosts', 'finishingWorks', 'expenseTrackings']);
+        $project->load(['materials', 'contractorCosts', 'structureCosts', 'finishingWorks', 'expenseTrackings']);
 
         return view('projects.show', compact('project'));
     }

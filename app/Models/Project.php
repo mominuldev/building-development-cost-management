@@ -38,7 +38,7 @@ class Project extends Model
         return $this->hasMany(Material::class);
     }
 
-    public function laborCosts(): HasMany
+    public function contractorCosts(): HasMany
     {
         return $this->hasMany(LaborCost::class);
     }
@@ -80,7 +80,7 @@ class Project extends Model
 
     public function getTotalLaborCostAttribute(): float
     {
-        $manualCosts = (float) $this->laborCosts()->manualEntry()->sum('total_cost');
+        $manualCosts = (float) $this->contractorCosts()->manualEntry()->sum('total_cost');
         $attendanceCosts = $this->attendance_based_labor_cost;
 
         return $manualCosts + $attendanceCosts;
@@ -88,7 +88,7 @@ class Project extends Model
 
     public function getAttendanceBasedLaborCostAttribute(): float
     {
-        return (float) $this->laborCosts()
+        return (float) $this->contractorCosts()
             ->attendanceBased()
             ->get()
             ->sum(function ($laborCost) {

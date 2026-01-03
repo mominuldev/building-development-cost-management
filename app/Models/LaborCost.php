@@ -12,6 +12,8 @@ class LaborCost extends Model
 {
     use HasFactory;
 
+    protected $table = 'contractor_costs';
+
     protected $fillable = [
         'project_id',
         'labor_type',
