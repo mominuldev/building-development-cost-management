@@ -26,14 +26,19 @@
                             <div class="text-xs text-gray-500">{{ ucfirst($contractor->category) }}</div>
                         </div>
                         <div class="bg-base-200 rounded-lg p-4">
-                            <div class="text-sm text-gray-600">Daily Rate</div>
-                            <div class="font-bold text-lg">{{ number_format($contractor->daily_wage, 2) }}</div>
-                            <div class="text-xs text-gray-500">{{ $contractor->number_of_workers }} workers × {{ $contractor->days_worked }} days</div>
+                            <div class="text-sm text-gray-600">Wage Calculation</div>
+                            @if($contractor->use_uniform_wage)
+                                <div class="font-bold text-lg">Uniform Daily</div>
+                                <div class="text-xs text-gray-500">Using worker's daily wage × days worked</div>
+                            @else
+                                <div class="font-bold text-lg">Individual</div>
+                                <div class="text-xs text-gray-500">Based on attendance wages</div>
+                            @endif
                         </div>
                         <div class="bg-base-200 rounded-lg p-4">
-                            <div class="text-sm text-gray-600">Total Cost</div>
-                            <div class="font-bold text-lg">{{ number_format($contractor->total_cost, 2) }}</div>
-                            <div class="text-xs text-gray-500">Contract amount</div>
+                            <div class="text-sm text-gray-600">Total Bill</div>
+                            <div class="font-bold text-lg">{{ number_format($contractor->actual_total_cost, 2) }}</div>
+                            <div class="text-xs text-gray-500">From workers' attendance</div>
                         </div>
                     </div>
                 </div>
@@ -59,6 +64,43 @@
                         <div class="stat">
                             <div class="stat-title">Paid to Contractor</div>
                             <div class="stat-value text-secondary">{{ number_format($contractor->total_payments_received, 2) }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Today's Attendance Bill -->
+            <div class="card bg-base-100 shadow-xl mb-6">
+                <div class="card-body">
+                    <div class="flex justify-between items-center">
+                        <h3 class="card-title">Today's Attendance Bill - {{ today()->format('M d, Y') }}</h3>
+                        <a href="{{ route('projects.attendances.create', ['project' => $project, 'date' => today()->format('Y-m-d')]) }}" class="btn btn-sm btn-success">
+                            Mark Attendance
+                        </a>
+                    </div>
+
+                    <div class="stats stats-vertical lg:stats-horizontal bg-base-200 mt-4">
+                        <div class="stat">
+                            <div class="stat-title">Active Workers</div>
+                            <div class="stat-value text-success">{{ $todayStats['active_workers'] }}</div>
+                            <div class="stat-desc">of {{ $todayStats['total_workers'] }} total</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-title">Present Today</div>
+                            <div class="stat-value text-info">{{ $todayStats['total_present_today'] }}</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-title">Absent Today</div>
+                            <div class="stat-value text-error">{{ $todayStats['total_absent_today'] }}</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-title">Total Hours</div>
+                            <div class="stat-value">{{ number_format($todayStats['total_hours_today'], 1) }}</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-title">Today's Bill</div>
+                            <div class="stat-value text-primary">{{ number_format($todayStats['total_bill_today'], 2) }}</div>
+                            <div class="stat-desc">Total wage amount</div>
                         </div>
                     </div>
                 </div>

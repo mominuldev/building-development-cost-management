@@ -24,7 +24,27 @@ class ContractorWorkerController extends Controller
 
         $workers = $contractor->contractorWorkers()->with('attendances')->get();
 
-        return view('contractor-workers.index', compact('project', 'contractor', 'workers'));
+        // Get all worker IDs assigned to this contractor
+        $workerIds = $workers->pluck('id');
+
+        // Calculate today's attendance stats for this contractor's workers
+        $todayAttendances = \App\Models\Attendance::whereIn('worker_id', $workerIds)
+            ->whereDate('attendance_date', today())
+            ->get();
+
+        // Calculate overall stats
+        $activeWorkersCount = $workers->where('is_active', true)->count();
+
+        $todayStats = [
+            'active_workers' => $activeWorkersCount,
+            'total_workers' => $workers->count(),
+            'total_present_today' => $todayAttendances->where('status', 'present')->count(),
+            'total_absent_today' => $todayAttendances->where('status', 'absent')->count(),
+            'total_bill_today' => $todayAttendances->sum('wage_amount'),
+            'total_hours_today' => $todayAttendances->sum('hours_worked'),
+        ];
+
+        return view('contractor-workers.index', compact('project', 'contractor', 'workers', 'todayStats'));
     }
 
     public function attach(Request $request, Project $project, LaborCost $contractor)

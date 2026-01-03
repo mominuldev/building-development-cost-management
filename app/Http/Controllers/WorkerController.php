@@ -25,6 +25,18 @@ class WorkerController extends Controller
             ->latest()
             ->get();
 
+        // Calculate today's attendance bill
+        $todayAttendances = $project->attendances()
+            ->whereDate('attendance_date', today())
+            ->get();
+
+        $todayStats = [
+            'total_workers_present' => $todayAttendances->where('status', 'present')->count(),
+            'total_workers_absent' => $todayAttendances->where('status', 'absent')->count(),
+            'total_bill' => $todayAttendances->sum('wage_amount'),
+            'total_hours' => $todayAttendances->sum('hours_worked'),
+        ];
+
         $categories = [
             'mason' => 'Mason',
             'carpenter' => 'Carpenter',
@@ -47,6 +59,7 @@ class WorkerController extends Controller
         return view('workers.index', compact(
             'project',
             'workers',
+            'todayStats',
             'categories',
             'laborTypes'
         ));
@@ -189,11 +202,14 @@ class WorkerController extends Controller
             'labor_type' => 'required|in:daily,contractor,skilled,unskilled,specialist',
             'category' => 'nullable|string|max:255',
             'daily_wage' => 'required|numeric|min:0',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
             'hire_date' => 'nullable|date',
             'terminate_date' => 'nullable|date|after_or_equal:hire_date',
             'notes' => 'nullable|string',
         ]);
+
+        // Convert checkbox to boolean (if not present, it's unchecked = false)
+        $validated['is_active'] = $request->has('is_active');
 
         // Validate primary_contractor_id belongs to project and is a contractor
         if (!empty($validated['primary_contractor_id'])) {
@@ -201,6 +217,16 @@ class WorkerController extends Controller
             if (!$contractor || $contractor->project_id !== $project->id || $contractor->labor_type !== 'contractor') {
                 return back()->withInput()->withErrors(['primary_contractor_id' => 'Invalid contractor selected.']);
             }
+        }
+
+        // If deactivating worker and terminate_date is not set, set it to today
+        if (!$validated['is_active'] && empty($validated['terminate_date'])) {
+            $validated['terminate_date'] = now();
+        }
+
+        // If activating worker, clear terminate_date
+        if ($validated['is_active']) {
+            $validated['terminate_date'] = null;
         }
 
         $worker->update($validated);

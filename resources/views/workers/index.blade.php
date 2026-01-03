@@ -43,6 +43,38 @@
                 </div>
             </div>
 
+            <!-- Today's Attendance Bill -->
+            <div class="card bg-base-100 shadow-xl mb-6">
+                <div class="card-body">
+                    <div class="flex justify-between items-center">
+                        <h3 class="card-title">Today's Attendance Bill - {{ today()->format('M d, Y') }}</h3>
+                        <a href="{{ route('projects.attendances.create', ['project' => $project, 'date' => today()->format('Y-m-d')]) }}" class="btn btn-sm btn-success">
+                            Mark Attendance
+                        </a>
+                    </div>
+
+                    <div class="stats stats-vertical lg:stats-horizontal bg-base-200 mt-4">
+                        <div class="stat">
+                            <div class="stat-title">Workers Present</div>
+                            <div class="stat-value text-success">{{ $todayStats['total_workers_present'] }}</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-title">Workers Absent</div>
+                            <div class="stat-value text-error">{{ $todayStats['total_workers_absent'] }}</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-title">Total Hours</div>
+                            <div class="stat-value text-info">{{ number_format($todayStats['total_hours'], 1) }}</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-title">Today's Bill</div>
+                            <div class="stat-value text-primary">{{ number_format($todayStats['total_bill'], 2) }}</div>
+                            <div class="stat-desc">Total wage amount</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Workers Table -->
             <div class="card bg-base-100 shadow-xl">
                 <div class="card-body">

@@ -65,6 +65,17 @@
                                 </select>
                             </div>
 
+                            <!-- Uniform Wage Option -->
+                            <div class="form-control">
+                                <label class="label cursor-pointer justify-start gap-4">
+                                    <input type="checkbox" name="use_uniform_wage" class="checkbox checkbox-primary" {{ old('use_uniform_wage', $laborCost->use_uniform_wage) ? 'checked' : '' }} value="1">
+                                    <div>
+                                        <span class="label-text font-bold">Use Uniform Daily Wage Calculation</span>
+                                        <span class="label-text-alt">When enabled, worker earnings will be calculated using their individual daily wage × days worked. Attendance-specific wages will be ignored.</span>
+                                    </div>
+                                </label>
+                            </div>
+
                             <!-- Description (Optional) -->
                             <div class="form-control">
                                 <label class="label">

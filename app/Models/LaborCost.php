@@ -26,6 +26,8 @@ class LaborCost extends Model
         'notes',
         'is_attendance_based',
         'calculated_total',
+        'use_uniform_wage',
+        'uniform_daily_wage',
     ];
 
     protected $casts = [
@@ -36,6 +38,8 @@ class LaborCost extends Model
         'work_date' => 'date',
         'is_attendance_based' => 'boolean',
         'calculated_total' => 'decimal:2',
+        'use_uniform_wage' => 'boolean',
+        'uniform_daily_wage' => 'decimal:2',
     ];
 
     public function project(): BelongsTo
@@ -77,7 +81,17 @@ class LaborCost extends Model
             return 0;
         }
 
-        // Sum all wages earned by assigned workers
+        // If using uniform wage calculation, calculate each worker's pay as daily_wage * days_worked
+        if ($this->use_uniform_wage) {
+            return $this->contractorWorkers()
+                ->get()
+                ->sum(function ($worker) {
+                    // Use worker's daily wage * days worked
+                    return ($worker->daily_wage ?? 0) * $worker->total_days_worked;
+                });
+        }
+
+        // Otherwise, sum all individual wages earned by assigned workers
         return $this->contractorWorkers()
             ->get()
             ->sum(function ($worker) {

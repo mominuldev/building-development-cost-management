@@ -54,6 +54,7 @@ class LaborCostController extends Controller
             'labor_type' => 'required|in:contractor',
             'name' => 'required|string|max:255',
             'category' => 'required|string|max:255',
+            'use_uniform_wage' => 'nullable|boolean',
             'number_of_workers' => 'nullable|integer|min:1',
             'daily_wage' => 'nullable|numeric|min:0',
             'days_worked' => 'nullable|integer|min:1',
@@ -66,6 +67,7 @@ class LaborCostController extends Controller
         $validated['is_attendance_based'] = true; // Contractors use attendance-based calculation
         $validated['total_cost'] = 0; // Default value, will be calculated from workers
         $validated['work_date'] = null; // Contractors don't need a specific work date
+        $validated['use_uniform_wage'] = $request->has('use_uniform_wage'); // Convert checkbox to boolean
 
         LaborCost::create($validated);
 
@@ -123,6 +125,7 @@ class LaborCostController extends Controller
             'labor_type' => 'required|in:contractor',
             'name' => 'required|string|max:255',
             'category' => 'required|string|max:255',
+            'use_uniform_wage' => 'nullable|boolean',
             'number_of_workers' => 'nullable|integer|min:1',
             'daily_wage' => 'nullable|numeric|min:0',
             'days_worked' => 'nullable|integer|min:1',
@@ -130,6 +133,8 @@ class LaborCostController extends Controller
             'description' => 'nullable|string',
             'notes' => 'nullable|string',
         ]);
+
+        $validated['use_uniform_wage'] = $request->has('use_uniform_wage'); // Convert checkbox to boolean
 
         $laborCost->update($validated);
 
