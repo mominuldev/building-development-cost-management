@@ -128,7 +128,7 @@ class AttendanceController extends Controller
 
         $validated = $request->validate([
             'worker_id' => 'required|exists:workers,id',
-            'labor_cost_id' => 'nullable|exists:labor_costs,id',
+            'labor_cost_id' => 'nullable|exists:contractor_costs,id',
             'attendance_date' => 'required|date',
             'status' => 'required|in:present,absent,leave,half_day,holiday,overtime',
             'hours_worked' => 'nullable|numeric|min:0|max:24',
@@ -177,7 +177,7 @@ class AttendanceController extends Controller
 
         $validated = $request->validate([
             'attendance_date' => 'required|date',
-            'labor_cost_id' => 'nullable|exists:labor_costs,id',
+            'labor_cost_id' => 'nullable|exists:contractor_costs,id',
             'attendances' => 'required|array',
             'attendances.*.worker_id' => 'required|exists:workers,id',
             'attendances.*.status' => 'required|in:present,absent,leave,half_day,holiday,overtime',
@@ -270,7 +270,7 @@ class AttendanceController extends Controller
 
         $validated = $request->validate([
             'worker_id' => 'required|exists:workers,id',
-            'labor_cost_id' => 'nullable|exists:labor_costs,id',
+            'labor_cost_id' => 'nullable|exists:contractor_costs,id',
             'attendance_date' => 'required|date',
             'status' => 'required|in:present,absent,leave,half_day,holiday,overtime',
             'hours_worked' => 'nullable|numeric|min:0|max:24',

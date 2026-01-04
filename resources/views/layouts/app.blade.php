@@ -11,6 +11,9 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+        <!-- Toastr CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -32,5 +35,74 @@
                 {{ $slot }}
             </main>
         </div>
+
+        <!-- Toastr JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+        <!-- Flash Notifications -->
+        @if(session('success'))
+            <script>
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000"
+                };
+                toastr.success('{{ session('success') }}');
+            </script>
+        @endif
+
+        @if(session('error'))
+            <script>
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000"
+                };
+                toastr.error('{{ session('error') }}');
+            </script>
+        @endif
+
+        @if(session('info'))
+            <script>
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000"
+                };
+                toastr.info('{{ session('info') }}');
+            </script>
+        @endif
+
+        @if(session('warning'))
+            <script>
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000"
+                };
+                toastr.warning('{{ session('warning') }}');
+            </script>
+        @endif
+
+        @if($errors->any())
+            <script>
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000"
+                };
+                toastr.error('Please fix the form errors.');
+            </script>
+        @endif
     </body>
 </html>

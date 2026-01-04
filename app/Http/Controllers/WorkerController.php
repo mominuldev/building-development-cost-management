@@ -103,7 +103,7 @@ class WorkerController extends Controller
         $this->authorize('view', $project);
 
         $validated = $request->validate([
-            'primary_contractor_id' => 'nullable|exists:labor_costs,id',
+            'primary_contractor_id' => 'nullable|exists:contractor_costs,id',
             'name' => 'required|string|max:255',
             'phone' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
@@ -194,7 +194,7 @@ class WorkerController extends Controller
         }
 
         $validated = $request->validate([
-            'primary_contractor_id' => 'nullable|exists:labor_costs,id',
+            'primary_contractor_id' => 'nullable|exists:contractor_costs,id',
             'name' => 'required|string|max:255',
             'phone' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
