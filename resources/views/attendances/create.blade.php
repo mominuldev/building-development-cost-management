@@ -41,7 +41,7 @@
                         <div class="grid grid-cols-1 gap-4">
                             <!-- Worker -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text">Worker</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -57,7 +57,7 @@
 
                             <!-- Date -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text">Attendance Date</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -67,7 +67,7 @@
 
                             <!-- Status -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text">Status</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -86,7 +86,7 @@
 
                             <!-- Hours Worked -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text">Hours Worked</span>
                                     <span class="label-text-alt">(Optional, for overtime)</span>
                                 </label>

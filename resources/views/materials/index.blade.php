@@ -93,15 +93,15 @@
                             </table>
                         </div>
                     @else
-                        <div class="alert alert-info">
+                        <div class="alert alert-info flex gap-2">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                             <div>
                                 <h3 class="font-bold">No materials yet!</h3>
-                                <div class="text-xs">Start tracking your construction materials.</div>
+                                <div class="text-xs mb-2">Start tracking your construction materials.</div>
+                                <a href="{{ route('projects.materials.create', $project) }}" class="btn btn-sm btn-primary">Add First Material</a>
                             </div>
-                            <a href="{{ route('projects.materials.create', $project) }}" class="btn btn-sm btn-primary">Add First Material</a>
                         </div>
                     @endif
                 </div>
