@@ -55,7 +55,7 @@
 
                             <!-- Contractor Name -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center>
                                     <span class="label-text font-semibold text-gray-900">Contractor Name</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -76,7 +76,7 @@
 
                             <!-- Category -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Category</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -146,8 +146,8 @@
                             </div>
 
                             <!-- Info Alert -->
-                            <div class="alert">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="alert flex gap-2">
+                                <svg class="w-6 h-6 min-w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                                 <div>

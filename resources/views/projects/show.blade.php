@@ -128,7 +128,7 @@
             <!-- Quick Actions -->
             <div class="card bg-white shadow-xl">
                 <div class="card-body">
-                    <h3 class="card-title text-lg">
+                    <h3 class="card-title text-lg flex  items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
@@ -208,7 +208,7 @@
                 <!-- Cost Breakdown -->
                 <div class="lg:col-span-2 card bg-white shadow-xl">
                     <div class="card-body">
-                        <h3 class="card-title text-lg">
+                        <h3 class="card-title text-lg flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
@@ -306,7 +306,7 @@
                 <!-- Project Details -->
                 <div class="card bg-white shadow-xl">
                     <div class="card-body">
-                        <h3 class="card-title text-lg">
+                        <h3 class="card-title text-lg flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
@@ -439,7 +439,7 @@
                                     <div class="flex items-center gap-2 text-sm">
                                         <div class="avatar placeholder">
                                             <div class="bg-neutral text-neutral-content rounded-full w-8">
-                                                <span class="text-xs">{{ substr($worker->name, 0, 1) }}</span>
+                                                <span class="text-xs flex items-center justify-center h-full">{{ substr($worker->name, 0, 1) }}</span>
                                             </div>
                                         </div>
                                         <span class="truncate flex-1">{{ $worker->name }}</span>

@@ -70,7 +70,7 @@
                                             </div>
                                         </th>
                                         @foreach($dates as $day)
-                                            <th class="text-center min-w-[50px] p-2 @if($day->isSunday()) bg-red-50 @elseif($day->isSaturday()) bg-blue-50 @endif">
+                                            <th class="text-center min-w-[50px] p-2 @if($day->isFriday()) bg-red-50 @elseif($day->isSaturday()) bg-blue-50 @endif">
                                                 <div class="text-lg font-bold {{ $day->isToday() ? 'text-primary' : 'text-gray-900' }}">{{ $day->format('j') }}</div>
                                                 <div class="text-xs {{ $day->isToday() ? 'text-primary' : 'text-gray-500' }}">{{ $day->format('D') }}</div>
                                                 @if($day->isToday())
@@ -87,7 +87,7 @@
                                                 <div class="flex items-center gap-3">
                                                     <div class="avatar placeholder">
                                                         <div class="bg-neutral text-neutral-content rounded-lg w-10">
-                                                            <span class="text-sm">{{ substr($worker->name, 0, 1) }}</span>
+                                                            <span class="text-sm flex items-center justify-center h-full">{{ substr($worker->name, 0, 1) }}</span>
                                                         </div>
                                                     </div>
                                                     <div>
@@ -105,7 +105,7 @@
                                                     $key = $worker->id . '_' . $day->toDateString();
                                                     $attendance = $attendances->get($key);
                                                 @endphp
-                                                <td class="p-2 text-center @if($day->isSunday()) bg-red-50/30 @elseif($day->isSaturday()) bg-blue-50/30 @endif">
+                                                <td class="p-2 text-center @if($day->isFriday()) bg-red-50/30 @elseif($day->isSaturday()) bg-blue-50/30 @endif">
                                                     @if($attendance)
                                                         @if($attendance->status == 'present')
                                                             <a href="{{ route('projects.attendances.edit', [$project, $attendance]) }}"
@@ -150,7 +150,7 @@
                                                                 </div>
                                                             </a>
                                                         @endif
-                                                    @elseif($day->isSunday())
+                                                    @elseif($day->isFriday())
                                                         <div class="w-9 h-9 mx-auto rounded-lg bg-red-100"></div>
                                                     @else
                                                         <a href="{{ route('projects.attendances.create', ['project' => $project, 'worker_id' => $worker->id, 'date' => $day->toDateString()]) }}"
@@ -233,7 +233,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="font-semibold text-gray-900">Sunday</div>
+                                <div class="font-semibold text-gray-900">Friday</div>
                                 <div class="text-xs text-gray-500">Weekly holiday (red highlight)</div>
                             </div>
                         </div>

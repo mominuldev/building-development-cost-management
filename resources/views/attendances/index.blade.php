@@ -189,7 +189,7 @@
                                                     <div class="flex items-center gap-3">
                                                         <div class="avatar placeholder">
                                                             <div class="bg-neutral text-neutral-content rounded-lg w-10">
-                                                                <span class="text-sm">{{ substr($worker->name, 0, 1) }}</span>
+                                                                <span class="text-sm flex justify-center items-center h-full">{{ substr($worker->name, 0, 1) }}</span>
                                                             </div>
                                                         </div>
                                                         <div>
@@ -210,7 +210,7 @@
                                                 </td>
                                                 <td>
                                                     <input type="hidden" name="attendances[{{ $loop->index }}][worker_id]" value="{{ $worker->id }}">
-                                                    <select name="attendances[{{ $loop->index }}][status]" class="select select-bordered select-sm">
+                                                    <select name="attendances[{{ $loop->index }}][status]" class="select select-bordered select-md">
                                                         <option value="present">Present</option>
                                                         <option value="absent">Absent</option>
                                                         <option value="half_day">Half Day</option>
@@ -223,13 +223,13 @@
                                                     <input type="text"
                                                            name="attendances[{{ $loop->index }}][work_description]"
                                                            placeholder="Work done..."
-                                                           class="input input-bordered input-sm w-full max-w-xs">
+                                                           class="input input-bordered input-md w-full max-w-xs">
                                                 </td>
                                                 <td>
                                                     <input type="text"
                                                            name="attendances[{{ $loop->index }}][notes]"
                                                            placeholder="Notes..."
-                                                           class="input input-bordered input-sm w-full max-w-xs">
+                                                           class="input input-bordered input-md w-full max-w-xs">
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -309,7 +309,7 @@
                                                 <div class="flex items-center gap-3">
                                                     <div class="avatar placeholder">
                                                         <div class="bg-neutral text-neutral-content rounded-lg w-10">
-                                                            <span class="text-sm">{{ substr($attendance->worker->name, 0, 1) }}</span>
+                                                            <span class="text-sm flex items-center justify-center h-full">{{ substr($attendance->worker->name, 0, 1) }}</span>
                                                         </div>
                                                     </div>
                                                     <div>

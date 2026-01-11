@@ -141,7 +141,7 @@
                                             <div class="flex items-center gap-3">
                                                 <div class="avatar placeholder">
                                                     <div class="bg-neutral text-neutral-content rounded-lg w-10">
-                                                        <span class="text-lg">{{ substr($material->name, 0, 1) }}</span>
+                                                        <span class="text-lg flex justify-center items-center h-full">{{ substr($material->name, 0, 1) }}</span>
                                                     </div>
                                                 </div>
                                                 <div>
