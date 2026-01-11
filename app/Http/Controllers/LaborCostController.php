@@ -19,7 +19,7 @@ class LaborCostController extends Controller
 
         $laborCosts = $project->contractorCosts()->latest()->get();
 
-        return view('labor-costs.index', compact('project', 'laborCosts'));
+        return view('contractors.index', compact('project', 'laborCosts'));
     }
 
     public function create(Project $project)
@@ -42,7 +42,7 @@ class LaborCostController extends Controller
             'other' => 'Other'
         ];
 
-        return view('labor-costs.create', compact('project', 'laborTypes', 'categories'));
+        return view('contractors.create', compact('project', 'laborTypes', 'categories'));
     }
 
     public function store(Request $request, Project $project)
@@ -71,7 +71,7 @@ class LaborCostController extends Controller
 
         LaborCost::create($validated);
 
-        return redirect()->route('projects.labor-costs.index', $project)
+        return redirect()->route('projects.contractors.index', $project)
             ->with('success', 'Contractor added successfully. Assign workers to calculate costs.');
     }
 
@@ -83,7 +83,7 @@ class LaborCostController extends Controller
             abort(404);
         }
 
-        return view('labor-costs.show', compact('project', 'laborCost'));
+        return view('contractors.show', compact('project', 'laborCost'));
     }
 
     public function edit(Project $project, LaborCost $laborCost)
@@ -109,7 +109,7 @@ class LaborCostController extends Controller
             'other' => 'Other'
         ];
 
-        return view('labor-costs.edit', compact('project', 'laborCost', 'laborTypes', 'categories'));
+        return view('contractors.edit', compact('project', 'laborCost', 'laborTypes', 'categories'));
     }
 
     public function update(Request $request, Project $project, LaborCost $laborCost)
@@ -138,7 +138,7 @@ class LaborCostController extends Controller
 
         $laborCost->update($validated);
 
-        return redirect()->route('projects.labor-costs.index', $project)
+        return redirect()->route('projects.contractors.index', $project)
             ->with('success', 'Contractor updated successfully.');
     }
 
@@ -152,7 +152,7 @@ class LaborCostController extends Controller
 
         $laborCost->delete();
 
-        return redirect()->route('projects.labor-costs.index', $project)
+        return redirect()->route('projects.contractors.index', $project)
             ->with('success', 'Contractor deleted successfully.');
     }
 }

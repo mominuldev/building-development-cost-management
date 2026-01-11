@@ -52,7 +52,7 @@
                         <div class="space-y-6">
                             <!-- Name -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Worker Name</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -75,7 +75,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <!-- Phone -->
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Phone Number</span>
                                         <span class="label-text-alt text-gray-400">(Optional)</span>
                                     </label>
@@ -93,7 +93,7 @@
 
                                 <!-- Email -->
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Email Address</span>
                                         <span class="label-text-alt text-gray-400">(Optional)</span>
                                     </label>
@@ -112,7 +112,7 @@
 
                             <!-- Address -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Address</span>
                                     <span class="label-text-alt text-gray-400">(Optional)</span>
                                 </label>
@@ -128,7 +128,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <!-- Labor Type -->
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Labor Type</span>
                                         <span class="label-text-alt text-error">*</span>
                                     </label>
@@ -149,7 +149,7 @@
 
                                 <!-- Category -->
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Category</span>
                                         <span class="label-text-alt text-gray-400">(Optional)</span>
                                     </label>
@@ -171,7 +171,7 @@
 
                             <!-- Daily Wage -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Daily Wage</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -190,7 +190,7 @@
 
                             <!-- Primary Contractor -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Primary Contractor</span>
                                     <span class="label-text-alt text-gray-400">(Optional)</span>
                                 </label>
@@ -216,7 +216,7 @@
 
                             <!-- Hire Date -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Hire Date</span>
                                     <span class="label-text-alt text-gray-400">(Optional)</span>
                                 </label>
@@ -236,7 +236,7 @@
 
                             <!-- Notes -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Additional Notes</span>
                                     <span class="label-text-alt text-gray-400">(Optional)</span>
                                 </label>

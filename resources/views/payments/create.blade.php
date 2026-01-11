@@ -52,7 +52,7 @@
                         <div class="space-y-6">
                             <!-- Payment To Selection -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Payment To</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -75,7 +75,7 @@
 
                             <!-- Recipient (Contractor) -->
                             <div class="form-control" id="contractor_group" style="display: none;">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Select Contractor</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -98,7 +98,7 @@
 
                             <!-- Recipient (Worker) -->
                             <div class="form-control" id="worker_group" style="display: none;">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Select Worker</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -129,7 +129,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <!-- Amount -->
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Amount</span>
                                         <span class="label-text-alt text-error">*</span>
                                     </label>
@@ -145,7 +145,7 @@
 
                                 <!-- Payment Date -->
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Payment Date</span>
                                         <span class="label-text-alt text-error">*</span>
                                     </label>
@@ -165,7 +165,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <!-- Payment Method -->
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Payment Method</span>
                                         <span class="label-text-alt text-error">*</span>
                                     </label>
@@ -186,7 +186,7 @@
 
                                 <!-- Transaction Reference -->
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Transaction Reference</span>
                                         <span class="label-text-alt text-gray-400">(Optional)</span>
                                     </label>
@@ -205,7 +205,7 @@
 
                             <!-- Period Covered -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Period Covered</span>
                                     <span class="label-text-alt text-gray-400">(Optional)</span>
                                 </label>

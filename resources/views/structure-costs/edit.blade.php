@@ -42,7 +42,7 @@
                         <div class="grid grid-cols-1 gap-4">
                             <!-- Structure Type -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text">Structure Type</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -56,7 +56,7 @@
 
                             <!-- Name -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text">Name</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -78,7 +78,7 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <!-- Quantity -->
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text">Quantity</span>
                                         <span class="label-text-alt text-error">*</span>
                                     </label>
@@ -88,7 +88,7 @@
 
                                 <!-- Unit -->
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text">Unit</span>
                                         <span class="label-text-alt text-error">*</span>
                                     </label>
@@ -103,7 +103,7 @@
 
                             <!-- Unit Price -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text">Unit Price</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -116,7 +116,7 @@
 
                             <!-- Work Date -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text">Work Date</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>

@@ -52,7 +52,7 @@
                         <div class="space-y-6">
                             <!-- Structure Type -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Structure Type</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -76,7 +76,7 @@
 
                             <!-- Name -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Work Name</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -97,7 +97,7 @@
 
                             <!-- Description -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Description</span>
                                     <span class="label-text-alt text-gray-400">(Optional)</span>
                                 </label>
@@ -113,7 +113,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <!-- Quantity -->
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Quantity</span>
                                         <span class="label-text-alt text-error">*</span>
                                     </label>
@@ -129,7 +129,7 @@
 
                                 <!-- Unit -->
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Unit</span>
                                         <span class="label-text-alt text-error">*</span>
                                     </label>
@@ -151,7 +151,7 @@
 
                             <!-- Unit Price -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Unit Price</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -170,7 +170,7 @@
 
                             <!-- Work Date -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Work Date</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -190,7 +190,7 @@
 
                             <!-- Notes -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Additional Notes</span>
                                     <span class="label-text-alt text-gray-400">(Optional)</span>
                                 </label>

@@ -9,7 +9,7 @@
                 <p class="text-gray-500 mt-1">Workers assigned to {{ $contractor->name ?? 'this contractor' }}</p>
             </div>
             <div class="flex gap-2">
-                <a href="{{ route('projects.labor-costs.index', $project) }}" class="btn btn-ghost btn-sm gap-2">
+                <a href="{{ route('projects.contractors.index', $project) }}" class="btn btn-ghost btn-sm gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                     </svg>

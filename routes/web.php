@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('projects/{project}')->name('projects.')->group(function () {
         Route::resource('materials', MaterialController::class);
-        Route::resource('labor-costs', LaborCostController::class);
+        Route::resource('contractors', LaborCostController::class);
         Route::resource('structure-costs', StructureCostController::class);
         Route::resource('finishing-works', FinishingWorkController::class);
         Route::resource('workers', WorkerController::class);

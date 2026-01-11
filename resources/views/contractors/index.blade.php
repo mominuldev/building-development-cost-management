@@ -15,7 +15,7 @@
                     </svg>
                     Back to Project
                 </a>
-                <a href="{{ route('projects.labor-costs.create', $project) }}" class="btn btn-primary btn-sm gap-2">
+                <a href="{{ route('projects.contractors.create', $project) }}" class="btn btn-primary btn-sm gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
@@ -271,12 +271,12 @@
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                                     </svg>
                                                 </a>
-                                                <a href="{{ route('projects.labor-costs.edit', [$project, $labor]) }}" class="btn btn-ghost btn-xs btn-circle text-warning" title="Edit">
+                                                <a href="{{ route('projects.contractors.edit', [$project, $labor]) }}" class="btn btn-ghost btn-xs btn-circle text-warning" title="Edit">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                                     </svg>
                                                 </a>
-                                                <form action="{{ route('projects.labor-costs.destroy', [$project, $labor]) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this contractor?')">
+                                                <form action="{{ route('projects.contractors.destroy', [$project, $labor]) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this contractor?')">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-ghost btn-xs btn-circle text-error" title="Delete">
@@ -301,7 +301,7 @@
                         </div>
                         <h3 class="text-lg font-semibold text-gray-900 mb-2">No contractors yet</h3>
                         <p class="text-gray-500 mb-6">Add your first contractor to start tracking costs and worker assignments</p>
-                        <a href="{{ route('projects.labor-costs.create', $project) }}" class="btn btn-primary gap-2">
+                        <a href="{{ route('projects.contractors.create', $project) }}" class="btn btn-primary gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                             </svg>

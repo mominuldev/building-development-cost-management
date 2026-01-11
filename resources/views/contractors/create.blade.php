@@ -5,7 +5,7 @@
                 <h2 class="text-2xl font-bold text-gray-900">Add New Contractor</h2>
                 <p class="text-gray-500 mt-1">{{ $project->name }}</p>
             </div>
-            <a href="{{ route('projects.labor-costs.index', $project) }}" class="btn btn-ghost btn-sm gap-2">
+            <a href="{{ route('projects.contractors.index', $project) }}" class="btn btn-ghost btn-sm gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>
@@ -30,7 +30,7 @@
                         </div>
                     </div>
 
-                    <form action="{{ route('projects.labor-costs.store', $project) }}" method="POST">
+                    <form action="{{ route('projects.contractors.store', $project) }}" method="POST">
                         @csrf
 
                         @if ($errors->any())
@@ -161,7 +161,7 @@
 
                         <!-- Actions -->
                         <div class="flex justify-end gap-3 mt-8 pt-6 border-t">
-                            <a href="{{ route('projects.labor-costs.index', $project) }}" class="btn btn-ghost gap-2">
+                            <a href="{{ route('projects.contractors.index', $project) }}" class="btn btn-ghost gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                 </svg>
