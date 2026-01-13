@@ -145,4 +145,25 @@ class Worker extends Model
             return 'pending';
         }
     }
+
+    // Check if worker is assigned to a contractor with uniform wage calculation
+    public function getUsesUniformWageAttribute(): bool
+    {
+        return $this->primaryContractor && $this->primaryContractor->use_uniform_wage;
+    }
+
+    // Get uniform wage calculation info
+    public function getUniformWageCalculationAttribute(): array
+    {
+        if (!$this->uses_uniform_wage) {
+            return [];
+        }
+
+        return [
+            'contractor_name' => $this->primaryContractor->name,
+            'daily_wage' => $this->daily_wage,
+            'days_worked' => $this->total_days_worked,
+            'total_earned' => $this->daily_wage * $this->total_days_worked,
+        ];
+    }
 }

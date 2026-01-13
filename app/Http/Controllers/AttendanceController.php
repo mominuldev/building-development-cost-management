@@ -110,7 +110,7 @@ class AttendanceController extends Controller
         $date = $request->get('date', today()->toDateString());
         $workerId = $request->get('worker_id');
 
-        $workers = $project->workers()->active()->get();
+        $workers = $project->workers()->active()->with('primaryContractor')->get();
         $laborCosts = $project->contractorCosts()->attendanceBased()->get();
 
         return view('attendances.create', compact(
@@ -249,7 +249,7 @@ class AttendanceController extends Controller
             abort(404);
         }
 
-        $workers = $project->workers()->active()->get();
+        $workers = $project->workers()->active()->with('primaryContractor')->get();
         $laborCosts = $project->contractorCosts()->attendanceBased()->get();
 
         return view('attendances.edit', compact(

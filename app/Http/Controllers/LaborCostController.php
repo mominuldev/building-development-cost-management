@@ -75,22 +75,22 @@ class LaborCostController extends Controller
             ->with('success', 'Contractor added successfully. Assign workers to calculate costs.');
     }
 
-    public function show(Project $project, LaborCost $laborCost)
+    public function show(Project $project, LaborCost $contractor)
     {
         $this->authorize('view', $project);
 
-        if ($laborCost->project_id !== $project->id) {
+        if ($contractor->project_id !== $project->id) {
             abort(404);
         }
 
-        return view('contractors.show', compact('project', 'laborCost'));
+        return view('contractors.show', compact('project', 'contractor'));
     }
 
-    public function edit(Project $project, LaborCost $laborCost)
+    public function edit(Project $project, LaborCost $contractor)
     {
         $this->authorize('view', $project);
 
-        if ($laborCost->project_id !== $project->id) {
+        if ($contractor->project_id !== $project->id) {
             abort(404);
         }
 
@@ -109,14 +109,14 @@ class LaborCostController extends Controller
             'other' => 'Other'
         ];
 
-        return view('contractors.edit', compact('project', 'laborCost', 'laborTypes', 'categories'));
+        return view('contractors.edit', compact('project', 'contractor', 'laborTypes', 'categories'));
     }
 
-    public function update(Request $request, Project $project, LaborCost $laborCost)
+    public function update(Request $request, Project $project, LaborCost $contractor)
     {
         $this->authorize('view', $project);
 
-        if ($laborCost->project_id !== $project->id) {
+        if ($contractor->project_id !== $project->id) {
             abort(404);
         }
 
@@ -136,21 +136,21 @@ class LaborCostController extends Controller
 
         $validated['use_uniform_wage'] = $request->has('use_uniform_wage'); // Convert checkbox to boolean
 
-        $laborCost->update($validated);
+        $contractor->update($validated);
 
         return redirect()->route('projects.contractors.index', $project)
             ->with('success', 'Contractor updated successfully.');
     }
 
-    public function destroy(Project $project, LaborCost $laborCost)
+    public function destroy(Project $project, LaborCost $contractor)
     {
         $this->authorize('view', $project);
 
-        if ($laborCost->project_id !== $project->id) {
+        if ($contractor->project_id !== $project->id) {
             abort(404);
         }
 
-        $laborCost->delete();
+        $contractor->delete();
 
         return redirect()->route('projects.contractors.index', $project)
             ->with('success', 'Contractor deleted successfully.');

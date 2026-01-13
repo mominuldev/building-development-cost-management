@@ -99,7 +99,10 @@
                         </div>
                         <div class="divider my-2"></div>
                         <div class="text-center">
-                            <div class="text-3xl font-bold text-green-600">{{ number_format($contractor->actual_total_cost, 2) }}</div>
+                            @php
+                                $totalBill = $contractor->actual_total_cost ?? 0;
+                            @endphp
+                            <div class="text-3xl font-bold text-green-600">{{ number_format($totalBill, 2) }}</div>
                             <p class="text-sm text-gray-500">From workers' attendance</p>
                         </div>
                     </div>
@@ -121,7 +124,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="@if($contractor->use_uniform_wage) grid grid-cols-1 md:grid-cols-3 gap-4 @else grid grid-cols-2 lg:grid-cols-5 gap-4 @endif">
                         <!-- Total Wages -->
                         <div class="bg-blue-50 rounded-lg p-4">
                             <div class="flex items-center gap-2 mb-2">
@@ -131,29 +134,34 @@
                                 <span class="text-sm font-semibold text-blue-900">Total Wages</span>
                             </div>
                             <div class="text-2xl font-bold text-blue-600">{{ number_format($workers->sum('total_wages_earned'), 2) }}</div>
+                            @if($contractor->use_uniform_wage)
+                                <div class="text-xs text-gray-500 mt-1">Worker daily wage × days worked</div>
+                            @endif
                         </div>
 
-                        <!-- Paid to Workers -->
-                        <div class="bg-green-50 rounded-lg p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                                <span class="text-sm font-semibold text-green-900">Paid to Workers</span>
+                        @if(!$contractor->use_uniform_wage)
+                            <!-- Paid to Workers -->
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <span class="text-sm font-semibold text-green-900">Paid to Workers</span>
+                                </div>
+                                <div class="text-2xl font-bold text-green-600">{{ number_format($workers->sum('total_payments_received'), 2) }}</div>
                             </div>
-                            <div class="text-2xl font-bold text-green-600">{{ number_format($workers->sum('total_payments_received'), 2) }}</div>
-                        </div>
 
-                        <!-- Due to Workers -->
-                        <div class="bg-orange-50 rounded-lg p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                                <span class="text-sm font-semibold text-orange-900">Due to Workers</span>
+                            <!-- Due to Workers -->
+                            <div class="bg-orange-50 rounded-lg p-4">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <span class="text-sm font-semibold text-orange-900">Due to Workers</span>
+                                </div>
+                                <div class="text-2xl font-bold text-orange-600">{{ number_format($workers->sum(function($w) { return $w->amount_due; }), 2) }}</div>
                             </div>
-                            <div class="text-2xl font-bold text-orange-600">{{ number_format($workers->sum(function($w) { return $w->amount_due; }), 2) }}</div>
-                        </div>
+                        @endif
 
                         <!-- Paid to Contractor -->
                         <div class="bg-purple-50 rounded-lg p-4">
@@ -164,6 +172,25 @@
                                 <span class="text-sm font-semibold text-purple-900">Paid to Contractor</span>
                             </div>
                             <div class="text-2xl font-bold text-purple-600">{{ number_format($contractor->total_payments_received, 2) }}</div>
+                        </div>
+
+                        <!-- Due to Contractor -->
+                        <div class="bg-red-50 rounded-lg p-4">
+                            <div class="flex items-center gap-2 mb-2">
+                                <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span class="text-sm font-semibold text-red-900">Due to Contractor</span>
+                            </div>
+                            @php
+                                $dueToContractor = max(0, $contractor->actual_total_cost - $contractor->total_payments_received);
+                            @endphp
+                            <div class="text-2xl font-bold @if($dueToContractor > 0) text-red-600 @else text-green-600 @endif">{{ number_format($dueToContractor, 2) }}</div>
+                            @if($dueToContractor == 0 && $contractor->actual_total_cost > 0)
+                                <div class="text-xs text-green-600 mt-1 font-semibold">Fully Paid</div>
+                            @elseif($dueToContractor > 0)
+                                <div class="text-xs text-gray-500 mt-1">{{ number_format($contractor->actual_total_cost, 2) }} total bill</div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -286,6 +313,18 @@
                         </div>
                     </div>
 
+                    @if($contractor->use_uniform_wage)
+                    <div class="alert alert-info mb-4 flex gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div>
+                            <h4 class="font-bold text-sm">Uniform Wage Calculation Mode</h4>
+                            <p class="text-xs">Payments processed at contractor level. Individual worker payment tracking is hidden.</p>
+                        </div>
+                    </div>
+                    @endif
+
                     @if($workers->count() > 0)
                     <div class="overflow-x-auto">
                         <table class="table">
@@ -295,9 +334,11 @@
                                     <th>Category</th>
                                     <th class="text-right">Days Worked</th>
                                     <th class="text-right">Wages Earned</th>
-                                    <th class="text-right">Paid</th>
-                                    <th class="text-right">Due</th>
-                                    <th class="text-center">Status</th>
+                                    @if(!$contractor->use_uniform_wage)
+                                        <th class="text-right">Paid</th>
+                                        <th class="text-right">Due</th>
+                                        <th class="text-center">Status</th>
+                                    @endif
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -335,28 +376,30 @@
                                         <td class="text-right">
                                             <div class="text-lg font-bold text-gray-900">{{ number_format($worker->total_wages_earned, 2) }}</div>
                                         </td>
-                                        <td class="text-right">
-                                            <div class="text-lg font-bold text-green-600">{{ number_format($worker->total_payments_received, 2) }}</div>
-                                        </td>
-                                        <td class="text-right">
-                                            <div class="text-lg font-bold {{ $worker->amount_due > 0 ? 'text-orange-600' : 'text-green-600' }}">
-                                                {{ number_format($worker->amount_due, 2) }}
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            @if($worker->payment_status == 'paid')
-                                                <div class="badge badge-success badge-lg gap-1">
-                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                                    </svg>
-                                                    Paid
+                                        @if(!$contractor->use_uniform_wage)
+                                            <td class="text-right">
+                                                <div class="text-lg font-bold text-green-600">{{ number_format($worker->total_payments_received, 2) }}</div>
+                                            </td>
+                                            <td class="text-right">
+                                                <div class="text-lg font-bold {{ $worker->amount_due > 0 ? 'text-orange-600' : 'text-green-600' }}">
+                                                    {{ number_format($worker->amount_due, 2) }}
                                                 </div>
-                                            @elseif($worker->payment_status == 'partial')
-                                                <div class="badge badge-warning badge-lg">Partial</div>
-                                            @else
-                                                <div class="badge badge-error badge-lg">Pending</div>
-                                            @endif
-                                        </td>
+                                            </td>
+                                            <td class="text-center">
+                                                @if($worker->payment_status == 'paid')
+                                                    <div class="badge badge-success badge-lg gap-1">
+                                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                        </svg>
+                                                        Paid
+                                                    </div>
+                                                @elseif($worker->payment_status == 'partial')
+                                                    <div class="badge badge-warning badge-lg">Partial</div>
+                                                @else
+                                                    <div class="badge badge-error badge-lg">Pending</div>
+                                                @endif
+                                            </td>
+                                        @endif
                                         <td>
                                             <div class="flex gap-1 justify-center">
                                                 <a href="{{ route('projects.workers.show', [$project, $worker]) }}" class="btn btn-ghost btn-xs btn-circle" title="View Details">

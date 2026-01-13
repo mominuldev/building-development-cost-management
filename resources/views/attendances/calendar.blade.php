@@ -70,7 +70,8 @@
                                             </div>
                                         </th>
                                         @foreach($dates as $day)
-                                            <th class="text-center min-w-[50px] p-2 @if($day->isFriday()) bg-red-50 @elseif($day->isSaturday()) bg-blue-50 @endif">
+                                            @php $isWeeklyHoliday = \App\Models\Settings::isWeeklyHoliday($day); @endphp
+                                            <th class="text-center min-w-[50px] p-2 @if($isWeeklyHoliday) bg-red-50 @elseif($day->isSaturday()) bg-blue-50 @endif">
                                                 <div class="text-lg font-bold {{ $day->isToday() ? 'text-primary' : 'text-gray-900' }}">{{ $day->format('j') }}</div>
                                                 <div class="text-xs {{ $day->isToday() ? 'text-primary' : 'text-gray-500' }}">{{ $day->format('D') }}</div>
                                                 @if($day->isToday())
@@ -104,8 +105,9 @@
                                                 @php
                                                     $key = $worker->id . '_' . $day->toDateString();
                                                     $attendance = $attendances->get($key);
+                                                    $isWeeklyHoliday = \App\Models\Settings::isWeeklyHoliday($day);
                                                 @endphp
-                                                <td class="p-2 text-center @if($day->isFriday()) bg-red-50/30 @elseif($day->isSaturday()) bg-blue-50/30 @endif">
+                                                <td class="p-2 text-center @if($isWeeklyHoliday) bg-red-50/30 @elseif($day->isSaturday()) bg-blue-50/30 @endif">
                                                     @if($attendance)
                                                         @if($attendance->status == 'present')
                                                             <a href="{{ route('projects.attendances.edit', [$project, $attendance]) }}"
@@ -150,7 +152,7 @@
                                                                 </div>
                                                             </a>
                                                         @endif
-                                                    @elseif($day->isFriday())
+                                                    @elseif($isWeeklyHoliday)
                                                         <div class="w-9 h-9 mx-auto rounded-lg bg-red-100"></div>
                                                     @else
                                                         <a href="{{ route('projects.attendances.create', ['project' => $project, 'worker_id' => $worker->id, 'date' => $day->toDateString()]) }}"
@@ -233,7 +235,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="font-semibold text-gray-900">Friday</div>
+                                <div class="font-semibold text-gray-900">{{ \App\Models\Settings::getWeeklyHolidayName() }}</div>
                                 <div class="text-xs text-gray-500">Weekly holiday (red highlight)</div>
                             </div>
                         </div>

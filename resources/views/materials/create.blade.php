@@ -54,7 +54,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <!-- Material Type -->
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Material Type</span>
                                         <span class="label-text-alt text-error">*</span>
                                     </label>
@@ -75,7 +75,7 @@
 
                                 <!-- Material Name -->
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Material Name</span>
                                         <span class="label-text-alt text-error">*</span>
                                     </label>
@@ -94,7 +94,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <!-- Quantity -->
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Quantity</span>
                                         <span class="label-text-alt text-error">*</span>
                                     </label>
@@ -112,7 +112,7 @@
 
                                 <!-- Unit -->
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Unit</span>
                                         <span class="label-text-alt text-error">*</span>
                                     </label>
@@ -134,7 +134,7 @@
 
                             <!-- Unit Price with auto-calc hint -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Unit Price</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -155,7 +155,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <!-- Purchase Date -->
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Purchase Date</span>
                                         <span class="label-text-alt text-error">*</span>
                                     </label>

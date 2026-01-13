@@ -3,7 +3,7 @@
         <div class="flex justify-between items-center">
             <div>
                 <h2 class="text-2xl font-bold text-gray-900">Edit Contractor</h2>
-                <p class="text-gray-500 mt-1">{{ $laborCost->name }}</p>
+                <p class="text-gray-500 mt-1">{{ $contractor->name }}</p>
             </div>
             <a href="{{ route('projects.contractors.index', $project) }}" class="btn btn-ghost btn-sm gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -30,7 +30,7 @@
                         </div>
                     </div>
 
-                    <form action="{{ route('projects.contractors.update', [$project, $laborCost]) }}" method="POST">
+                    <form action="{{ route('projects.contractors.update', [$project, $contractor]) }}" method="POST">
                         @csrf
                         @method('PUT')
 
@@ -61,7 +61,7 @@
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
                                 <div class="relative">
-                                    <input type="text" name="name" id="name" value="{{ old('name', $laborCost->name) }}"
+                                    <input type="text" name="name" id="name" value="{{ old('name', $contractor->name) }}"
                                         placeholder="e.g., ABC Construction Company, John Doe & Sons"
                                         class="input input-bordered w-full pl-10" required />
                                     <div class="absolute left-3 top-1/2 -translate-y-1/2">
@@ -85,7 +85,7 @@
                                     <select name="category" id="category" class="select select-bordered w-full appearance-none" required>
                                         <option value="">Select a category...</option>
                                         @foreach($categories as $key => $label)
-                                            <option value="{{ $key }}" {{ old('category', $laborCost->category) == $key ? 'selected' : '' }}>{{ $label }}</option>
+                                            <option value="{{ $key }}" {{ old('category', $contractor->category) == $key ? 'selected' : '' }}>{{ $label }}</option>
                                         @endforeach
                                     </select>
                                     <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
@@ -103,7 +103,7 @@
                             <div class="card bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200">
                                 <div class="card-body p-4">
                                     <label class="label cursor-pointer flex gap-4 p-0">
-                                        <input type="checkbox" name="use_uniform_wage" class="checkbox checkbox-primary" id="use_uniform_wage" {{ old('use_uniform_wage', $laborCost->use_uniform_wage) ? 'checked' : '' }} value="1">
+                                        <input type="checkbox" name="use_uniform_wage" class="checkbox checkbox-primary" id="use_uniform_wage" {{ old('use_uniform_wage', $contractor->use_uniform_wage) ? 'checked' : '' }} value="1">
                                         <div class="flex-1">
                                             <div class="flex items-center gap-2 mb-1">
                                                 <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -127,7 +127,7 @@
                                 </label>
                                 <textarea name="description" id="description" rows="3"
                                     placeholder="Brief description of the contractor's work..."
-                                    class="textarea textarea-bordered">{{ old('description', $laborCost->description) }}</textarea>
+                                    class="textarea textarea-bordered">{{ old('description', $contractor->description) }}</textarea>
                                 <label class="label">
                                     <span class="label-text-alt">Describe the scope of work or contract details</span>
                                 </label>
@@ -140,7 +140,7 @@
                                 </label>
                                 <textarea name="notes" id="notes" rows="3"
                                     placeholder="Any additional notes, terms, or special instructions..."
-                                    class="textarea textarea-bordered">{{ old('notes', $laborCost->notes) }}</textarea>
+                                    class="textarea textarea-bordered">{{ old('notes', $contractor->notes) }}</textarea>
                                 <label class="label">
                                     <span class="label-text-alt">Add any internal notes or reminders</span>
                                 </label>
@@ -160,19 +160,19 @@
                                             <div class="grid grid-cols-2 gap-x-4 gap-y-1 mt-2 text-sm">
                                                 <div class="flex items-center gap-2">
                                                     <span class="text-gray-600">Assigned Workers:</span>
-                                                    <span class="font-bold">{{ $laborCost->assigned_workers_count }}</span>
+                                                    <span class="font-bold">{{ $contractor->assigned_workers_count }}</span>
                                                 </div>
                                                 <div class="flex items-center gap-2">
                                                     <span class="text-gray-600">Total Bill:</span>
-                                                    <span class="font-bold">{{ number_format($laborCost->actual_total_cost, 2) }}</span>
+                                                    <span class="font-bold">{{ number_format($contractor->actual_total_cost, 2) }}</span>
                                                 </div>
                                                 <div class="flex items-center gap-2">
                                                     <span class="text-gray-600">Paid:</span>
-                                                    <span class="font-bold text-green-600">{{ number_format($laborCost->total_payments_received, 2) }}</span>
+                                                    <span class="font-bold text-green-600">{{ number_format($contractor->total_payments_received, 2) }}</span>
                                                 </div>
                                                 <div class="flex items-center gap-2">
                                                     <span class="text-gray-600">Due:</span>
-                                                    <span class="font-bold text-red-600">{{ number_format($laborCost->total_due, 2) }}</span>
+                                                    <span class="font-bold text-red-600">{{ number_format($contractor->total_due, 2) }}</span>
                                                 </div>
                                             </div>
                                         </div>

@@ -59,11 +59,19 @@
                                         <span class="label-text-alt text-error">*</span>
                                     </label>
                                     <div class="relative">
-                                        <select name="worker_id" class="select select-bordered w-full appearance-none" required>
+                                        <select name="worker_id" id="worker_id" class="select select-bordered w-full appearance-none" required onchange="checkUniformWageWorker()">
                                             <option value="">Choose worker...</option>
                                             @foreach($workers as $worker)
-                                                <option value="{{ $worker->id }}" {{ old('worker_id', $workerId) == $worker->id ? 'selected' : '' }}>
+                                                <option value="{{ $worker->id }}"
+                                                        {{ old('worker_id', $workerId) == $worker->id ? 'selected' : '' }}
+                                                        data-uses-uniform-wage="{{ $worker->uses_uniform_wage ? 'true' : 'false' }}"
+                                                        data-contractor-name="{{ $worker->primaryContractor->name ?? '' }}"
+                                                        data-daily-wage="{{ $worker->daily_wage }}"
+                                                        data-days-worked="{{ $worker->total_days_worked }}">
                                                     {{ $worker->name }} ({{ ucfirst($worker->category) ?? 'N/A' }}) - {{ number_format($worker->daily_wage, 2) }}/day
+                                                    @if($worker->uses_uniform_wage)
+                                                        <span class="badge badge-xs badge-info ml-2">Uniform Wage</span>
+                                                    @endif
                                                 </option>
                                             @endforeach
                                         </select>
@@ -76,6 +84,21 @@
                                     <label class="label">
                                         <span class="label-text-alt">Daily wage will be used for calculation</span>
                                     </label>
+
+                                    <!-- Uniform Wage Info Alert -->
+                                    <div id="uniform_wage_alert" class="alert alert-info hidden">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <div>
+                                            <h4 class="font-bold">Uniform Wage Calculation</h4>
+                                            <div class="text-sm mt-1">
+                                                <p>This worker is assigned to <strong><span id="contractor_name"></span></strong> which uses uniform wage calculation.</p>
+                                                <p class="mt-2">Wages will be calculated as: <span class="font-bold">Daily Wage ({{ $project->currency ?? '$' }}<span id="worker_daily_wage"></span>) × Days Worked (<span id="worker_days_worked"></span>)</span></p>
+                                                <p class="text-xs text-gray-500 mt-2">Individual payment tracking is disabled. All payments are processed at the contractor level.</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <!-- Attendance Date -->
@@ -208,7 +231,7 @@
                                 @if($laborCosts->count() > 0)
                                     <div class="form-control">
                                         <label class="label">
-                                            <span class="label-text font-semibold text-gray-900">Link to Contractor</span>
+                                            <span class="label-text font-semibold text-gray-900">Assigned Contractor</span>
                                             <span class="label-text-alt text-gray-400">(Optional)</span>
                                         </label>
                                         <div class="relative">
@@ -293,4 +316,35 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function checkUniformWageWorker() {
+            const select = document.getElementById('worker_id');
+            const selectedOption = select.options[select.selectedIndex];
+            const usesUniformWage = selectedOption.getAttribute('data-uses-uniform-wage') === 'true';
+            const alertDiv = document.getElementById('uniform_wage_alert');
+
+            if (usesUniformWage) {
+                const contractorName = selectedOption.getAttribute('data-contractor-name');
+                const dailyWage = selectedOption.getAttribute('data-daily-wage');
+                const daysWorked = selectedOption.getAttribute('data-days-worked');
+
+                document.getElementById('contractor_name').textContent = contractorName;
+                document.getElementById('worker_daily_wage').textContent = parseFloat(dailyWage).toFixed(2);
+                document.getElementById('worker_days_worked').textContent = daysWorked;
+
+                alertDiv.classList.remove('hidden');
+            } else {
+                alertDiv.classList.add('hidden');
+            }
+        }
+
+        // Check on page load if a worker is already selected
+        document.addEventListener('DOMContentLoaded', function() {
+            const select = document.getElementById('worker_id');
+            if (select && select.value) {
+                checkUniformWageWorker();
+            }
+        });
+    </script>
 </x-app-layout>

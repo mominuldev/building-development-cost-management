@@ -85,11 +85,16 @@
                 <!-- Total Due -->
                 <div class="card bg-white shadow-lg hover:shadow-xl transition-shadow">
                     <div class="card-body p-5">
+                        @php
+                            $totalDueToContractors = $laborCosts->sum(function ($contractor) {
+                                return max(0, $contractor->actual_total_cost - $contractor->total_payments_received);
+                            });
+                        @endphp
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-500">Total Due</p>
-                                <p class="text-3xl font-bold text-orange-600">{{ number_format($laborCosts->sum('total_due'), 2) }}</p>
-                                <p class="text-xs text-gray-400">Pending payments</p>
+                                <p class="text-3xl font-bold text-orange-600">{{ number_format($totalDueToContractors, 2) }}</p>
+                                <p class="text-xs text-gray-400">Due to contractors</p>
                             </div>
                             <div class="h-12 w-12 rounded-xl bg-orange-100 flex items-center justify-center">
                                 <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -133,7 +138,8 @@
                             <tbody>
                                 @foreach($laborCosts->where('labor_type', 'contractor') as $contractor)
                                     @php
-                                        $balance = $contractor->total_due - $contractor->total_payments_received;
+                                        $dueToContractor = max(0, $contractor->actual_total_cost - $contractor->total_payments_received);
+                                        $advancePayment = max(0, $contractor->total_payments_received - $contractor->actual_total_cost);
                                     @endphp
                                     <tr class="hover">
                                         <td>
@@ -151,15 +157,21 @@
                                             </div>
                                         </td>
                                         <td class="text-right">
-                                            <div class="text-lg font-bold text-error">{{ number_format($contractor->total_due, 2) }}</div>
+                                            <div class="text-lg font-bold text-error">{{ number_format($dueToContractor, 2) }}</div>
                                         </td>
                                         <td class="text-right">
                                             <div class="text-lg font-bold text-success">{{ number_format($contractor->total_payments_received, 2) }}</div>
                                         </td>
                                         <td class="text-right">
-                                            <div class="text-lg font-bold {{ $balance > 0 ? 'text-warning' : 'text-success' }}">
-                                                {{ number_format($balance, 2) }}
-                                            </div>
+                                            @if($advancePayment > 0)
+                                                <div class="text-lg font-bold text-info">{{ number_format($advancePayment, 2) }}</div>
+                                                <div class="text-xs text-info mt-1">Advance</div>
+                                            @else
+                                                <div class="text-lg font-bold {{ $dueToContractor > 0 ? 'text-warning' : 'text-success' }}">
+                                                    {{ number_format(abs($dueToContractor), 2) }}
+                                                </div>
+                                                <div class="text-xs text-gray-500 mt-1">{{ $dueToContractor > 0 ? 'Due' : 'Paid' }}</div>
+                                            @endif
                                         </td>
                                         <td>
                                             <div class="flex gap-2 justify-center">
@@ -219,9 +231,9 @@
                             <tbody>
                                 @foreach($laborCosts as $labor)
                                     @php
-                                        $balance = $labor->total_due - $labor->total_payments_received;
-                                        $paymentStatus = $balance <= 0 ? 'Paid' : ($labor->total_payments_received > 0 ? 'Partial' : 'Unpaid');
-                                        $statusColor = $balance <= 0 ? 'success' : ($labor->total_payments_received > 0 ? 'warning' : 'error');
+                                        $dueToContractor = max(0, $labor->actual_total_cost - $labor->total_payments_received);
+                                        $paymentStatus = $dueToContractor <= 0 ? 'Paid' : ($labor->total_payments_received > 0 ? 'Partial' : 'Unpaid');
+                                        $statusColor = $dueToContractor <= 0 ? 'success' : ($labor->total_payments_received > 0 ? 'warning' : 'error');
                                     @endphp
                                     <tr class="hover">
                                         <td>
@@ -260,8 +272,8 @@
                                         </td>
                                         <td class="text-center">
                                             <div class="badge badge-{{ $statusColor }} badge-lg">{{ $paymentStatus }}</div>
-                                            @if($balance > 0)
-                                                <div class="text-xs text-gray-500 mt-1">Due: {{ number_format($balance, 2) }}</div>
+                                            @if($dueToContractor > 0)
+                                                <div class="text-xs text-gray-500 mt-1">Due: {{ number_format($dueToContractor, 2) }}</div>
                                             @endif
                                         </td>
                                         <td>

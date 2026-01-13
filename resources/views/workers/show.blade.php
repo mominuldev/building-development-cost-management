@@ -138,7 +138,7 @@
                                                 @endif
                                                 @if($contractor->pivot->assigned_date)
                                                     <div class="text-xs text-gray-500 mt-1">
-                                                        Assigned: {{ $contractor->pivot->assigned_date->format('M d, Y') }}
+                                                        Assigned: {{ \Carbon\Carbon::parse($contractor->pivot->assigned_date)->format('M d, Y') }}
                                                     </div>
                                                 @endif
                                             </div>

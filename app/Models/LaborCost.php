@@ -105,8 +105,9 @@ class LaborCost extends Model
     public function getActualTotalCostAttribute(): float
     {
         if ($this->labor_type === 'contractor') {
-            // For contractors, use calculated total from workers' attendance
-            return (float) ($this->calculated_total ?? $this->calculated_from_workers);
+            // For contractors, always calculate from workers' attendance
+            // Use calculated_from_workers which dynamically sums worker attendance
+            return (float) $this->calculated_from_workers;
         }
 
         // For other types, use the manual calculation or total_cost

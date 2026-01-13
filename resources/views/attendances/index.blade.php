@@ -306,17 +306,24 @@
                                     @foreach($attendances as $attendance)
                                         <tr class="hover">
                                             <td>
-                                                <div class="flex items-center gap-3">
-                                                    <div class="avatar placeholder">
-                                                        <div class="bg-neutral text-neutral-content rounded-lg w-10">
-                                                            <span class="text-sm flex items-center justify-center h-full">{{ substr($attendance->worker->name, 0, 1) }}</span>
+                                                @if($attendance->worker)
+                                                    <div class="flex items-center gap-3">
+                                                        <div class="avatar placeholder">
+                                                            <div class="bg-neutral text-neutral-content rounded-lg w-10">
+                                                                <span class="text-sm flex items-center justify-center h-full">{{ substr($attendance->worker->name, 0, 1) }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div class="font-bold text-gray-900">{{ $attendance->worker->name }}</div>
+                                                            <div class="text-xs text-gray-500">{{ ucfirst($attendance->worker->category ?? 'N/A') }}</div>
                                                         </div>
                                                     </div>
-                                                    <div>
-                                                        <div class="font-bold text-gray-900">{{ $attendance->worker->name }}</div>
-                                                        <div class="text-xs text-gray-500">{{ ucfirst($attendance->worker->category ?? 'N/A') }}</div>
+                                                @else
+                                                    <div class="flex items-center gap-2">
+                                                        <div class="badge badge-error">Worker Deleted</div>
+                                                        <div class="text-xs text-gray-500">ID: {{ $attendance->worker_id }}</div>
                                                     </div>
-                                                </div>
+                                                @endif
                                             </td>
                                             <td>
                                                 @if($attendance->status == 'present')

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->foreignId('worker_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('labor_cost_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('labor_cost_id')->nullable()->comment('Reference to contractor_costs');
 
             // Attendance Details
             $table->date('attendance_date');

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('workers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('labor_cost_id')->nullable()->constrained('contractor_costs')->cascadeOnDelete();
-            $table->foreignId('primary_contractor_id')->nullable()->constrained('contractor_costs')->nullOnDelete()->comment('Primary contractor for this worker');
+            $table->unsignedBigInteger('labor_cost_id')->nullable()->comment('Reference to contractor_costs');
+            $table->unsignedBigInteger('primary_contractor_id')->nullable()->comment('Primary contractor for this worker');
 
             // Worker Information
             $table->string('name');

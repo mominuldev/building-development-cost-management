@@ -58,7 +58,7 @@ class PaymentController extends Controller
         $this->authorize('view', $project);
 
         $contractors = $project->contractorCosts()->contractors()->get();
-        $workers = $project->workers()->active()->get();
+        $workers = $project->workers()->active()->with('primaryContractor')->get();
 
         $paymentMethods = [
             'cash' => 'Cash',

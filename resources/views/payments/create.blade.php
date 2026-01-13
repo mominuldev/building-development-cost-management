@@ -103,15 +103,19 @@
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
                                 <div class="relative">
-                                    <select name="recipient_id" id="worker_id" class="select select-bordered w-full appearance-none">
+                                    <select name="recipient_id" id="payment_worker_id" class="select select-bordered w-full appearance-none" onchange="checkUniformWageWorkerPayment()">
                                         <option value="">Choose worker...</option>
                                         @foreach($workers as $worker)
-                                            <option value="{{ $worker->id }}" data-name="{{ $worker->name }}">
-                                                {{ $worker->name }} - {{ ucfirst($worker->category) }} ({{ number_format($worker->daily_wage, 2) }}/day)
-                                                @if($worker->amount_due > 0)
-                                                    - Due: {{ number_format($worker->amount_due, 2) }}
-                                                @endif
-                                            </option>
+                                            @if(!$worker->uses_uniform_wage)
+                                                <option value="{{ $worker->id }}"
+                                                        data-name="{{ $worker->name }}"
+                                                        data-amount-due="{{ $worker->amount_due }}">
+                                                    {{ $worker->name }} - {{ ucfirst($worker->category) ?? 'N/A' }} ({{ number_format($worker->daily_wage, 2) }}/day)
+                                                    @if($worker->amount_due > 0)
+                                                        - Due: {{ number_format($worker->amount_due, 2) }}
+                                                    @endif
+                                                </option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
@@ -123,6 +127,27 @@
                                 <label class="label">
                                     <span class="label-text-alt text-warning">Workers with unpaid wages are shown with due amounts</span>
                                 </label>
+                            </div>
+
+                            <!-- Uniform Wage Worker Alert -->
+                            <div id="uniform_wage_worker_alert" class="alert alert-warning hidden">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                </svg>
+                                <div>
+                                    <h4 class="font-bold">Workers Assigned to Uniform Wage Contractors</h4>
+                                    <div class="text-sm mt-1">
+                                        <p>The following workers are assigned to contractors with uniform wage calculation and should be paid at the contractor level:</p>
+                                        <ul class="list-disc list-inside mt-2 space-y-1">
+                                            @foreach($workers->where('uses_uniform_wage', true) as $worker)
+                                                <li>
+                                                    <strong>{{ $worker->name }}</strong> - Assigned to: {{ $worker->primaryContractor->name ?? 'N/A' }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                        <p class="text-xs text-gray-500 mt-2">Please select the "Contractor" option above to make payments to these workers.</p>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Amount & Payment Date -->
@@ -300,11 +325,13 @@
             const contractorGroup = document.getElementById('contractor_group');
             const workerGroup = document.getElementById('worker_group');
             const contractorId = document.getElementById('contractor_id');
-            const workerId = document.getElementById('worker_id');
+            const workerId = document.getElementById('payment_worker_id');
+            const uniformWageAlert = document.getElementById('uniform_wage_worker_alert');
 
             // Hide both groups first
             contractorGroup.style.display = 'none';
             workerGroup.style.display = 'none';
+            uniformWageAlert.classList.add('hidden');
 
             // Disable and remove required from both
             contractorId.disabled = true;
@@ -321,7 +348,25 @@
                 workerGroup.style.display = 'block';
                 workerId.disabled = false;
                 workerId.setAttribute('required', 'required');
+                // Show alert if there are uniform wage workers
+                const hasUniformWageWorkers = {{ $workers->where('uses_uniform_wage', true)->count() > 0 ? 'true' : 'false' }};
+                if (hasUniformWageWorkers) {
+                    uniformWageAlert.classList.remove('hidden');
+                }
             }
         }
+
+        function checkUniformWageWorkerPayment() {
+            // This function can be used for additional logic when selecting a worker
+            // For now, the worker dropdown already filters out uniform wage workers
+        }
+
+        // Check on page load if there are uniform wage workers
+        document.addEventListener('DOMContentLoaded', function() {
+            const hasUniformWageWorkers = {{ $workers->where('uses_uniform_wage', true)->count() > 0 ? 'true' : 'false' }};
+            if (hasUniformWageWorkers) {
+                // Show info when worker option is selected
+            }
+        });
     </script>
 </x-app-layout>

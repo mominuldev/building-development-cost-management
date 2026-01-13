@@ -19,6 +19,23 @@
                 <div class="card-body">
                     <h3 class="card-title mb-4">Edit Attendance Record</h3>
 
+                    <!-- Uniform Wage Alert -->
+                    @if($attendance->worker->uses_uniform_wage)
+                        <div class="alert alert-info mb-4 flex gap-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div>
+                                <h4 class="font-bold">Uniform Wage Calculation</h4>
+                                <div class="text-sm mt-1">
+                                    <p>This worker is assigned to <strong>{{ $attendance->worker->primaryContractor->name }}</strong> which uses uniform wage calculation.</p>
+                                    <p class="mt-2">Wages calculated as: Daily Wage ({{ $project->currency ?? '$' }}{{ number_format($attendance->worker->daily_wage, 2) }}) × Days Worked ({{ $attendance->worker->total_days_worked }})</p>
+                                    <p class="text-xs text-white mt-2">Individual payment tracking is disabled. All payments processed at contractor level.</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     <form action="{{ route('projects.attendances.update', [$project, $attendance]) }}" method="POST">
                         @csrf
                         @method('PUT')
@@ -42,15 +59,23 @@
                         <div class="grid grid-cols-1 gap-4">
                             <!-- Worker -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text">Worker</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
-                                <select name="worker_id" class="select select-bordered" required>
+                                <select name="worker_id" id="worker_id" class="select select-bordered" required onchange="checkUniformWageWorkerEdit()">
                                     <option value="">Select Worker...</option>
                                     @foreach($workers as $worker)
-                                        <option value="{{ $worker->id }}" {{ old('worker_id', $attendance->worker_id) == $worker->id ? 'selected' : '' }}>
+                                        <option value="{{ $worker->id }}"
+                                                {{ old('worker_id', $attendance->worker_id) == $worker->id ? 'selected' : '' }}
+                                                data-uses-uniform-wage="{{ $worker->uses_uniform_wage ? 'true' : 'false' }}"
+                                                data-contractor-name="{{ $worker->primaryContractor->name ?? '' }}"
+                                                data-daily-wage="{{ $worker->daily_wage }}"
+                                                data-days-worked="{{ $worker->total_days_worked }}">
                                             {{ $worker->name }} ({{ ucfirst($worker->category) ?? 'N/A' }}) - {{ number_format($worker->daily_wage, 2) }}/day
+                                            @if($worker->uses_uniform_wage)
+                                                <span class="badge badge-xs badge-info ml-2">Uniform Wage</span>
+                                            @endif
                                         </option>
                                     @endforeach
                                 </select>
@@ -58,7 +83,7 @@
 
                             <!-- Date -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text">Attendance Date</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -68,7 +93,7 @@
 
                             <!-- Status -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text">Status</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
@@ -99,7 +124,7 @@
                             @if($laborCosts->count() > 0)
                                 <div class="form-control">
                                     <label class="label">
-                                        <span class="label-text">Link to Labor Cost</span>
+                                        <span class="label-text">Assigned Contractor</span>
                                     </label>
                                     <select name="labor_cost_id" class="select select-bordered">
                                         <option value="">No Link</option>
@@ -142,4 +167,24 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function checkUniformWageWorkerEdit() {
+            const select = document.getElementById('worker_id');
+            const selectedOption = select.options[select.selectedIndex];
+            const usesUniformWage = selectedOption.getAttribute('data-uses-uniform-wage') === 'true';
+
+            // Reload page to show correct alert if worker changes
+            if (usesUniformWage && select.value !== '{{ $attendance->worker_id }}') {
+                // Just let the form submission handle it - the server will render correctly
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const select = document.getElementById('worker_id');
+            if (select) {
+                checkUniformWageWorkerEdit();
+            }
+        });
+    </script>
 </x-app-layout>
