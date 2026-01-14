@@ -134,7 +134,7 @@
                         </svg>
                         Quick Actions
                     </h3>
-                    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mt-6">
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mt-6">
                         <!-- Mark Attendance -->
                         <a href="{{ route('projects.attendances.create', [$project, 'date' => now()->format('Y-m-d')]) }}" class="group flex items-center gap-3 rounded-lg bg-gradient-to-r from-emerald-600 to-emerald-500 px-4 py-3 text-white shadow-lg shadow-emerald-200 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-300 hover:-translate-y-0.5">
                             <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/20 backdrop-blur-sm">
@@ -197,6 +197,19 @@
                             <div class="flex-1">
                                 <div class="text-sm font-semibold">Add Worker</div>
                                 <div class="text-xs text-pink-100">New employee</div>
+                            </div>
+                        </a>
+
+                        <!-- Give Loan -->
+                        <a href="{{ route('projects.loans.create', $project) }}" class="group flex items-center gap-3 rounded-lg bg-gradient-to-r from-teal-600 to-teal-500 px-4 py-3 text-white shadow-lg shadow-teal-200 transition-all duration-300 hover:shadow-xl hover:shadow-teal-300 hover:-translate-y-0.5">
+                            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/20 backdrop-blur-sm">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-sm font-semibold">Give Loan</div>
+                                <div class="text-xs text-teal-100">Track loans</div>
                             </div>
                         </a>
                     </div>
@@ -528,6 +541,46 @@
                         <div class="card-actions mt-4">
                             <a href="{{ route('projects.payments.index', $project) }}" class="btn btn-accent btn-sm flex-1">
                                 {{ $project->payments->count() > 0 ? 'View Payments' : 'Record Payment' }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loans -->
+                <div class="card bg-white shadow-xl hover:shadow-2xl transition-shadow">
+                    <div class="card-body">
+                        <div class="flex items-center justify-between">
+                            <h3 class="card-title">
+                                <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Loans
+                            </h3>
+                            <div class="badge badge-emerald">{{ number_format($project->loans->sum('amount'), 2) }}</div>
+                        </div>
+                        @php
+                            $totalLoans = $project->loans->sum('amount');
+                            $totalRepaid = $project->loans->sum('amount_repaid');
+                            $pendingLoans = $project->loans->where('status', 'pending')->count();
+                        @endphp
+                        <p class="text-sm text-gray-500 mt-2">{{ $project->loans->count() }} loans given</p>
+                        <div class="mt-4 space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span>Total Given:</span>
+                                <span class="font-medium text-emerald-600">{{ number_format($totalLoans, 2) }}</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Total Repaid:</span>
+                                <span class="font-medium text-success">{{ number_format($totalRepaid, 2) }}</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Pending:</span>
+                                <span class="font-medium">{{ $pendingLoans }}</span>
+                            </div>
+                        </div>
+                        <div class="card-actions mt-4">
+                            <a href="{{ route('projects.loans.index', $project) }}" class="btn btn-success btn-sm flex-1">
+                                {{ $project->loans->count() > 0 ? 'Manage Loans' : 'Give Loan' }}
                             </a>
                         </div>
                     </div>

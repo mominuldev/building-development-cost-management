@@ -73,6 +73,11 @@ class Project extends Model
         return $this->hasMany(Payment::class);
     }
 
+    public function loans(): HasMany
+    {
+        return $this->hasMany(Loan::class);
+    }
+
     public function getTotalMaterialCostAttribute(): float
     {
         return (float) $this->materials()->sum('total_cost');

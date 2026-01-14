@@ -5,6 +5,7 @@ use App\Http\Controllers\ContractorWorkerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FinishingWorkController;
 use App\Http\Controllers\LaborCostController;
+use App\Http\Controllers\LoanController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
@@ -41,6 +42,19 @@ Route::middleware('auth')->group(function () {
         Route::resource('workers', WorkerController::class);
         Route::resource('attendances', AttendanceController::class);
         Route::resource('payments', PaymentController::class);
+        Route::resource('loans', LoanController::class);
+
+        // Loan repayments
+        Route::post('loans/{loan}/repay', [LoanController::class, 'repay'])
+            ->name('loans.repay');
+
+        // Recipient details
+        Route::get('loans/recipient/{recipientName}', [LoanController::class, 'recipient'])
+            ->name('loans.recipient');
+
+        // Download loan history as PDF
+        Route::get('loans/recipient/{recipientName}/pdf', [LoanController::class, 'downloadPdf'])
+            ->name('loans.recipient.pdf');
 
         // Attendance calendar and bulk operations
         Route::get('attendances-calendar', [AttendanceController::class, 'calendar'])
