@@ -106,7 +106,7 @@
                                     <h4 class="font-bold text-gray-900 mb-3">Recipient Information</h4>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div class="form-control">
-                                            <label class="label">
+                                            <label class="labe flex items-centerl">
                                                 <span class="label-text font-semibold text-gray-900">Name</span>
                                                 <span class="label-text-alt text-error">*</span>
                                             </label>
@@ -114,7 +114,7 @@
                                                 class="input input-bordered" required />
                                         </div>
                                         <div class="form-control">
-                                            <label class="label">
+                                            <label class="label flex items-center">
                                                 <span class="label-text font-semibold text-gray-900">Phone</span>
                                                 <span class="label-text-alt">(Optional)</span>
                                             </label>
@@ -122,7 +122,7 @@
                                                 class="input input-bordered" />
                                         </div>
                                         <div class="form-control">
-                                            <label class="label">
+                                            <label class="label flex items-center">
                                                 <span class="label-text font-semibold text-gray-900">National ID</span>
                                                 <span class="label-text-alt">(Optional)</span>
                                             </label>
@@ -130,7 +130,7 @@
                                                 class="input input-bordered" />
                                         </div>
                                         <div class="form-control">
-                                            <label class="label">
+                                            <label class="label flex items-center">
                                                 <span class="label-text font-semibold text-gray-900">Address</span>
                                                 <span class="label-text-alt">(Optional)</span>
                                             </label>
@@ -144,7 +144,7 @@
                             <!-- Loan Amount & Date -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Loan Amount</span>
                                         <span class="label-text-alt text-error">*</span>
                                     </label>
@@ -157,7 +157,7 @@
                                     </div>
                                 </div>
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Loan Date</span>
                                         <span class="label-text-alt text-error">*</span>
                                     </label>
@@ -169,7 +169,7 @@
                             <!-- Payment Details -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Payment Method</span>
                                         <span class="label-text-alt text-error">*</span>
                                     </label>
@@ -193,7 +193,7 @@
                             <!-- Additional Fields -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Transaction Reference</span>
                                         <span class="label-text-alt">(Optional)</span>
                                     </label>
@@ -202,7 +202,7 @@
                                         class="input input-bordered" />
                                 </div>
                                 <div class="form-control">
-                                    <label class="label">
+                                    <label class="label flex items-center">
                                         <span class="label-text font-semibold text-gray-900">Interest Rate (%)</span>
                                         <span class="label-text-alt">(Optional)</span>
                                     </label>
@@ -217,11 +217,11 @@
 
                             <!-- Notes -->
                             <div class="form-control">
-                                <label class="label">
+                                <label class="label flex items-center">
                                     <span class="label-text font-semibold text-gray-900">Notes</span>
                                     <span class="label-text-alt">(Optional)</span>
                                 </label>
-                                <textarea name="notes" rows="3"
+                                <textarea name="notes" rows="3" class="textarea textarea-bordered"
                                     placeholder="Any additional notes about this loan...">{{ old('notes', $loan->notes) }}</textarea>
                             </div>
 

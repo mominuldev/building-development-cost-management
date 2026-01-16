@@ -96,7 +96,7 @@
                                                     <div class="flex items-center gap-2 flex-1">
                                                         <div class="avatar placeholder">
                                                             <div class="bg-amber-100 text-amber-600 rounded-full w-10">
-                                                                <span class="text-sm font-bold">{{ substr($recipient['name'], 0, 1) }}</span>
+                                                                <span class="text-sm font-bold flex items-center justify-center h-full">{{ substr($recipient['name'], 0, 1) }}</span>
                                                             </div>
                                                         </div>
                                                         <div>
@@ -159,7 +159,7 @@
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <!-- Recipient Name -->
                                         <div class="form-control">
-                                            <label class="label">
+                                            <label class="label flex items-center">
                                                 <span class="label-text font-semibold text-gray-900">Recipient Name</span>
                                                 <span class="label-text-alt text-error">*</span>
                                             </label>
@@ -169,7 +169,7 @@
 
                                         <!-- Recipient Phone -->
                                         <div class="form-control">
-                                            <label class="label">
+                                            <label class="label flex items-center">
                                                 <span class="label-text font-semibold text-gray-900">Phone Number</span>
                                                 <span class="label-text-alt">(Optional)</span>
                                             </label>
@@ -179,7 +179,7 @@
 
                                         <!-- Recipient NID -->
                                         <div class="form-control">
-                                            <label class="label">
+                                            <label class="label flex items-center">
                                                 <span class="label-text font-semibold text-gray-900">National ID / ID Document</span>
                                                 <span class="label-text-alt">(Optional)</span>
                                             </label>
@@ -189,7 +189,7 @@
 
                                         <!-- Recipient Address -->
                                         <div class="form-control">
-                                            <label class="label">
+                                            <label class="label flex items-center">
                                                 <span class="label-text font-semibold text-gray-900">Address</span>
                                                 <span class="label-text-alt">(Optional)</span>
                                             </label>
